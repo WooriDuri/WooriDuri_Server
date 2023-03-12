@@ -19,6 +19,10 @@ export class UserService {
   ) {}
   //*회원가입
   async sginup(createUserDto: CreateUserDto) {
+    const existUser = await this.userRepository.findOne({
+      email: createUserDto.email,
+    });
+    Do.require(!!existUser, '존재하는유저입니다.');
     const hash = await bcrypt.hash(createUserDto.password, 10);
     const user = this.userRepository.create();
     user.email = createUserDto.email;

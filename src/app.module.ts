@@ -11,6 +11,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { UserRepository } from './repository/user.repository';
 import { FriendRepository } from './repository/friend.repository';
+import { ChatsGateway } from './chats/chats.gateway';
+import { ChatsModule } from './chats/chats.module';
 
 @Module({
   imports: [
@@ -33,9 +35,10 @@ import { FriendRepository } from './repository/friend.repository';
     UserModule,
     FriendModule,
     AuthModule,
+    ChatsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ChatsGateway],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
