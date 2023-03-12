@@ -8,9 +8,13 @@ import { LoggerMiddleware } from './logger/logger.middleware';
 import { UserModule } from './user/user.module';
 import { FriendModule } from './friend/friend.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
+import { UserRepository } from './repository/user.repository';
+import { FriendRepository } from './repository/friend.repository';
 
 @Module({
   imports: [
+    ConfigModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: './.env',
@@ -28,6 +32,7 @@ import { ConfigModule } from '@nestjs/config';
     TypeOrmModule.forFeature([UserEntity, FriendEntity]),
     UserModule,
     FriendModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
