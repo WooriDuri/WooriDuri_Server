@@ -22,21 +22,21 @@ export class UserService {
     const existUser = await this.userRepository.findOne({
       email: createUserDto.email,
     });
-    Do.require(!!existUser, '존재하는유저입니다.');
+    Do.require(!existUser, '존재하는유저입니다.');
     const hash = await bcrypt.hash(createUserDto.password, 10);
     const user = this.userRepository.create();
     user.email = createUserDto.email;
     user.name = createUserDto.name;
     user.password = hash;
     await this.userRepository.save(user);
-    return user;
+    return this.myprofile(user);
   }
   //*프로필조회
   async myprofile(user: UserEntity) {
     const profile = await this.userRepository
       .createQueryBuilder('user')
       .where({ id: user.id })
-      .select('-password')
+      .select(['user.email', 'user.name', 'user.id'])
       .getOne();
     return profile;
   }

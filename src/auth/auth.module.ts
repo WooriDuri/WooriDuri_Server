@@ -1,4 +1,4 @@
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './../user/user.module';
 import { JwtStrategy } from './jwt/jwt.strategy';
 import { Module, forwardRef } from '@nestjs/common';
@@ -15,10 +15,17 @@ import { FriendEntity } from 'src/entity/friend.entity';
   imports: [
     TypeOrmModule.forFeature([UserEntity, FriendEntity]),
     PassportModule.register({ defaultStrategy: 'jwt', session: false }),
-    JwtModule.register({
-      secret: process.env.SECRETKEY,
-      signOptions: { expiresIn: '1d' },
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.get<string>('SECRETKEY'),
+        signOptions: { expiresIn: '1d' },
+      }),
     }),
+    // JwtModule.register({
+    //   secret: process.env.SECRETKEY,
+    //   signOptions: { expiresIn: '1d' },
+    // }),
     forwardRef(() => UserModule),
   ],
   providers: [AuthService, JwtStrategy],

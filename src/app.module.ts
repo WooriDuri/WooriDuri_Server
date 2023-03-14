@@ -38,7 +38,7 @@ import { ChatsModule } from './chats/chats.module';
     ChatsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, ChatsGateway],
+  providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

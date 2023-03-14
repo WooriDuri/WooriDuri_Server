@@ -1,3 +1,4 @@
+import { SearchFriend } from './../dto/search-friend.dto';
 import { Do } from './../exception/do';
 import { FindEmail } from './../dto/find-user.dto';
 import { FriendEntity } from './../entity/friend.entity';
@@ -16,12 +17,30 @@ export class FriendService {
     private readonly friendRepository: Repository<FriendEntity>,
   ) {}
   //*친구찾기
-  async findEmail(user: UserEntity, findEmail: FindEmail): Promise<UserEntity> {
+  async findEmail(user: UserEntity, searchFriend: SearchFriend) {
     const findUser = await this.userRepository.findOne({
-      email: findEmail.email,
+      email: searchFriend.email,
     });
     Do.require(!!findUser, '없는 유저입니다.');
-    return findUser;
+    const existFriend = await this.friendRepository.findOne({
+      hostId: user.id,
+      userId: findUser.id,
+    });
+    if (existFriend) {
+      return {
+        id: findUser.id,
+        email: findUser.email,
+        name: findUser.name,
+        isFriend: true,
+      };
+    } else {
+      return {
+        id: findUser.id,
+        email: findUser.email,
+        name: findUser.name,
+        isFriend: false,
+      };
+    }
   }
   //*친구추가
   async createFriend(user: UserEntity, userId: number): Promise<FriendEntity> {

@@ -1,7 +1,8 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { FriendEntity } from './friend.entity';
 
-@Entity()
+@Entity({ name: 'user' })
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
