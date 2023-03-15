@@ -54,6 +54,13 @@ export class FriendService {
   //*친구추가
   async createFriend(user: UserEntity, userId: number): Promise<FriendEntity> {
     try {
+      const existFriend = await this.friendRepository.findOne({
+        hostId: user.id,
+        userId: userId,
+      });
+      if (existFriend) {
+        throw new HttpException('이미 친구', 400);
+      }
       const friend = this.friendRepository.create();
       friend.hostId = user.id;
       friend.status = StatusEnum.ACTIVE;

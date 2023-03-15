@@ -1,3 +1,4 @@
+import { AuthModule } from './../auth/auth.module';
 import { FriendEntity } from './../entity/friend.entity';
 import { UserEntity } from './../entity/user.entity';
 import { FriendRepository } from './../repository/friend.repository';
@@ -10,6 +11,7 @@ import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
+    AuthModule,
     TypeOrmModule.forFeature([UserEntity, FriendEntity]),
     PassportModule.register({ defaultStrategy: 'jwt', session: false }),
   ],

@@ -40,7 +40,11 @@ export class AuthService {
       }
       // Do.require(!!isValidatePassword, '이메일 비밀번호를 확인하세요');
 
-      const payload = { email: email, id: existEmail.id };
+      const payload = {
+        email: email,
+        name: existEmail.name,
+        id: existEmail.id,
+      };
 
       return {
         token: this.jwtService.sign(payload),

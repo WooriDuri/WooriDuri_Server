@@ -47,7 +47,7 @@ export class FriendController {
     status: 200,
     description: '성공',
   })
-  @Post('/:id')
+  @Post(':id')
   @UseGuards(AuthGuard())
   createFriend(
     @CurrentUser() user: UserEntity,
@@ -63,7 +63,7 @@ export class FriendController {
     description: '성공',
     type: updateStatus,
   })
-  @Put('/:id')
+  @Put(':id')
   @UseGuards(AuthGuard())
   updateStatus(
     @CurrentUser() user: UserEntity,
