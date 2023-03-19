@@ -35,4 +35,7 @@ export class UserEntity {
 
   @OneToMany(() => JoinEntity, (join) => join.user)
   joins: Promise<JoinEntity[]>;
+
+  @OneToMany(() => JoinEntity, (chat) => chat.user)
+  chats: Promise<JoinEntity[]>;
 }

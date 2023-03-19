@@ -19,7 +19,7 @@ export class FriendEntity {
   })
   status: StatusEnum;
 
-  @Column()
+  @Column({ type: 'int', nullable: false })
   userId: number;
 
   @ManyToOne(() => UserEntity, (user) => user.friends)

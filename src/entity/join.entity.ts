@@ -16,6 +16,6 @@ export class JoinEntity {
   @Column({ type: 'varchar', length: 16, nullable: false })
   roomId: string;
 
-  @ManyToOne(() => RoomEntity, (room) => room.joins)
-  room: RoomEntity;
+  //   @ManyToOne(() => RoomEntity, (room) => room.joins)
+  //   room: RoomEntity;
 }

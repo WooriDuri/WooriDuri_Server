@@ -14,6 +14,6 @@ export class RoomEntity {
   })
   roomId: string;
 
-  @OneToMany(() => JoinEntity, (join) => join.room)
-  joins: Promise<JoinEntity[]>;
+  //   @OneToMany(() => JoinEntity, (join) => join.room)
+  //   joins: Promise<JoinEntity[]>;
 }
