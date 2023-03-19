@@ -13,6 +13,7 @@ import { UserRepository } from './repository/user.repository';
 import { FriendRepository } from './repository/friend.repository';
 // import { ChatsGateway } from './chats/chats.gateway';
 // import { ChatsModule } from './chats/chats.module';
+import { RoomModule } from './room/room.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { FriendRepository } from './repository/friend.repository';
     UserModule,
     FriendModule,
     AuthModule,
+    RoomModule,
     // ChatsModule,
   ],
   controllers: [AppController],

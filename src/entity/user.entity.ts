@@ -1,3 +1,4 @@
+import { JoinEntity } from './join.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { FriendEntity } from './friend.entity';
@@ -31,4 +32,7 @@ export class UserEntity {
 
   @OneToMany(() => FriendEntity, (friend) => friend.user)
   friends: Promise<FriendEntity[]>;
+
+  @OneToMany(() => JoinEntity, (join) => join.user)
+  joins: Promise<JoinEntity[]>;
 }
