@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as expressBasicAuth from 'express-basic-auth';
 import { AppModule } from './app.module';
+import { RedisIoAdapter } from './chats/adapter';
 import { HttpExceptionFilter } from './exception/http-exception.filter';
 
 async function bootstrap() {
@@ -40,6 +41,11 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   app.useGlobalFilters(new HttpExceptionFilter());
+
+  const redisIoAdapter = new RedisIoAdapter(app);
+  await redisIoAdapter.connectToRedis();
+
+  app.useWebSocketAdapter(redisIoAdapter);
 
   await app.listen(3000);
 }
