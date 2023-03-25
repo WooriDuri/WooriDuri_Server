@@ -1,3 +1,6 @@
+import { JoinEntity } from './../entity/join.entity';
+import { ChatsService } from './chats.service';
+import { ChatEntity } from './../entity/chat.entity';
 import { Socket } from 'socket.io';
 import { Logger, UseGuards } from '@nestjs/common';
 import {
@@ -10,6 +13,8 @@ import {
   WebSocketGateway,
 } from '@nestjs/websockets';
 import { AuthGuard } from '@nestjs/passport';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @WebSocketGateway()
 export class ChatsGateway
@@ -17,7 +22,13 @@ export class ChatsGateway
 {
   private logger = new Logger('chat');
 
-  constructor() {
+  constructor(
+    @InjectRepository(ChatEntity)
+    private readonly chatRepository: Repository<ChatEntity>,
+    private readonly chatsService: ChatsService,
+    @InjectRepository(JoinEntity)
+    private readonly joinRepository: Repository<JoinEntity>,
+  ) {
     this.logger.log('constructor');
   }
   afterInit() {

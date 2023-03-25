@@ -66,4 +66,19 @@ export class UserService {
       throw new HttpException(e, 400);
     }
   }
+
+  //*exist
+  async existUser(userId: number) {
+    try {
+      const existUser = await this.userRepository.findOne({
+        where: { id: userId },
+      });
+      if (!existUser) {
+        throw new HttpException('존재하지 않는 유저입니다.', 400);
+      }
+      return true;
+    } catch (e) {
+      throw new HttpException(e, 400);
+    }
+  }
 }

@@ -1,3 +1,6 @@
+import { JoinEntity } from './entity/join.entity';
+import { ChatEntity } from './entity/chat.entity';
+import { RoomEntity } from './entity/room.entity';
 import { FriendEntity } from './entity/friend.entity';
 import { UserEntity } from './entity/user.entity';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
@@ -9,11 +12,9 @@ import { UserModule } from './user/user.module';
 import { FriendModule } from './friend/friend.module';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
-import { UserRepository } from './repository/user.repository';
-import { FriendRepository } from './repository/friend.repository';
 // import { ChatsGateway } from './chats/chats.gateway';
 // import { ChatsModule } from './chats/chats.module';
-import { RoomModule } from './room/room.module';
+import { ChatsModule } from './chats/chats.module';
 
 @Module({
   imports: [
@@ -29,15 +30,19 @@ import { RoomModule } from './room/room.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [UserEntity, FriendEntity],
+      entities: [UserEntity, FriendEntity, RoomEntity, ChatEntity, JoinEntity],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([UserEntity, FriendEntity]),
+    TypeOrmModule.forFeature([
+      UserEntity,
+      FriendEntity,
+      RoomEntity,
+      ChatEntity,
+    ]),
     UserModule,
     FriendModule,
     AuthModule,
-    RoomModule,
-    // ChatsModule,
+    ChatsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
