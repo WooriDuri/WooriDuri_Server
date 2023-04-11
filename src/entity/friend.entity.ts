@@ -2,7 +2,7 @@ import { StatusEnum } from 'src/enum/friend-status.enum';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { UserEntity } from './user.entity';
 
-@Entity({ name: 'friend' })
+@Entity({ name: 'FRIEND' })
 export class FriendEntity {
   @PrimaryGeneratedColumn()
   id: number;

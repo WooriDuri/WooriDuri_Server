@@ -1,6 +1,15 @@
 import { JoinEntity } from './join.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { join } from 'path';
+import { UserEntity } from './user.entity';
 
 @Entity({ name: 'ROOM' })
 export class RoomEntity {
@@ -13,6 +22,21 @@ export class RoomEntity {
     nullable: false,
   })
   roomId: string;
+
+  @Column({ type: 'int', nullable: false })
+  member: number;
+
+  @Column({ type: 'int', nullable: false })
+  userId: number;
+
+  @ManyToOne(() => UserEntity, (user) => user.rooms)
+  user: UserEntity;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   //   @OneToMany(() => JoinEntity, (join) => join.room)
   //   joins: Promise<JoinEntity[]>;

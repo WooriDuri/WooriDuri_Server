@@ -1,9 +1,17 @@
+import { RoomEntity } from './room.entity';
 import { JoinEntity } from './join.entity';
 import { ApiProperty } from '@nestjs/swagger';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { FriendEntity } from './friend.entity';
 
-@Entity({ name: 'user' })
+@Entity({ name: 'USER' })
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -38,4 +46,13 @@ export class UserEntity {
 
   @OneToMany(() => JoinEntity, (chat) => chat.user)
   chats: Promise<JoinEntity[]>;
+
+  @OneToMany(() => RoomEntity, (room) => room.user)
+  rooms: Promise<RoomEntity[]>;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

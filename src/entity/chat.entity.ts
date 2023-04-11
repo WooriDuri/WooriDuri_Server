@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { UserEntity } from './user.entity';
 
 @Entity({ name: 'CHAT' })
 export class ChatEntity {
@@ -14,4 +22,16 @@ export class ChatEntity {
     nullable: false,
   })
   roomId: string;
+
+  @Column({ type: 'int', nullable: false })
+  userId: number;
+
+  @ManyToOne(() => UserEntity, (user) => user.chats)
+  user: UserEntity;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
